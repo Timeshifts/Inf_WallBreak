@@ -46,7 +46,7 @@ class Stat:
             if Stat.exp >= total_xp:
                 Stat.exp -= self.sum_exp(Stat.level + check_lvl -1) - self.sum_exp(Stat.level-1)
                 Stat.level += check_lvl
-                Stat.SP += check_lvl + shop.Shop.items[2].buy
+                Stat.SP += check_lvl * (1 + shop.Shop.items[2].buy)
                 count += check_lvl
                 Stat.max = Stat.level ** 2 + 7 * Stat.level + 15
             check_lvl //= 2

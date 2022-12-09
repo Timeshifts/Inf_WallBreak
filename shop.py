@@ -53,6 +53,7 @@ class ShopItem:
         self.buy_button = global_object.Button((26, 26), 'invisible', self.buy_item, {'item_id':self.id}, size=128)
 
     def buy_item(self, item_id):
+        if Shop.shop_obj is None: return
         if self.calc_price() <= status.money_obj.money and (self.max_buy == -1 or self.buy < self.max_buy):
             status.money_obj.set_money(status.money_obj.money - self.calc_price())
             shop_item[item_id]['Func']()
