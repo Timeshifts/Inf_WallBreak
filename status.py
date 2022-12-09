@@ -17,14 +17,16 @@ class Stat:
         self.text = ''
 
     def renew_text(self):
-        self.text = (f'파괴력: {Stat.stat["BRK"]}',
-            f'이동력: {Stat.stat["SPD"]}',
-            f'수집력: {Stat.stat["CLT"]}',
-            f'관찰력: {Stat.stat["OBS"]}',
-            f'적응력: {Stat.stat["ADP"]}',
+        self.text = (f'파괴력: {global_var.conv_num(Stat.stat["BRK"])}',
+            f'이동력: {global_var.conv_num(Stat.stat["SPD"])}',
+            f'수집력: {global_var.conv_num(Stat.stat["CLT"])}',
+            f'관찰력: {global_var.conv_num(Stat.stat["OBS"])}',
+            f'적응력: {global_var.conv_num(Stat.stat["ADP"])}',
             '',
-            f'레벨: {Stat.level} ({Stat.exp/Stat.max*100:.2f}%)',
-            f'남은 SP: {Stat.SP}')
+            # 부동소수점 문제로 인해 10^12 즈음부터 1레벨 단위 계산 불가능
+            f'레벨: {global_var.conv_num(Stat.level)} ({Stat.exp/Stat.max*100:.2f}%)'
+            if Stat.level < 10**12 else f'레벨: {global_var.conv_num(Stat.level)}',
+            f'남은 SP: {global_var.conv_num(Stat.SP)}')
 
     # sum 1tok n^2+7n+15 = k^3/3+4k^2+56k/3
     @staticmethod
@@ -101,7 +103,7 @@ class Money:
 
     def render_self(self):
         self.renders = []
-        self.text = f'{Money.money}'
+        self.text = f'{global_var.conv_num(Money.money)}'
         self.renders.append((Money.font.render(self.text, True, 'black'), (40, 2)))
         self.renders.append((self.image, (7, 0)))
 

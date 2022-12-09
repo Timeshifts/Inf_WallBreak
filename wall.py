@@ -41,7 +41,8 @@ class WallArrow(pygame.sprite.Sprite):
 class Wall(pygame.sprite.Sprite):
     count = 0
     EVENT_WALL_ARRIVED = pygame.event.custom_type()
-    wall_difficulty = 120
+    WALL_BASE_DIFF = 120
+    wall_difficulty = WALL_BASE_DIFF
 
     def __init__(self, pos=(0, 0)):
         pygame.sprite.Sprite.__init__(self)
@@ -51,7 +52,7 @@ class Wall(pygame.sprite.Sprite):
         self.image = self.rect = None
         self.wall_state = 0
         self.wall_image = -1
-        self.hp = self.max_hp = 100
+        self.hp = self.base_hp = self.max_hp = 100
         self.hp_bar = Bar(self.hp, self.max_hp, (self.pos[0], self.pos[1]-60))
         self.wall_arrow = WallArrow()
         self.font = global_var.font_bold
@@ -62,10 +63,11 @@ class Wall(pygame.sprite.Sprite):
     @staticmethod
     def set_difficulty():
         import shop
-        Wall.wall_difficulty = 120 - shop.Shop.items[1].buy
+        Wall.wall_difficulty = Wall.WALL_BASE_DIFF - shop.Shop.items[1].buy/2
         wall_obj.scale_wall()
 
     def scale_wall(self, stay=True):
+        self.base_hp = int(100 * (Wall.WALL_BASE_DIFF / 100) ** Wall.count)
         self.hp = int(100 * (Wall.wall_difficulty / 100) ** Wall.count)
         self.max_hp = self.hp
         if not stay: self.pos[0] += math.log(int(100 * 1.2 ** Wall.count)) * 100
@@ -115,8 +117,8 @@ class Wall(pygame.sprite.Sprite):
         self.render_self()
 
     def break_wall(self):
-        status.money_obj.set_money(status.Money.money + int(math.log(self.max_hp, 2) * status.Stat.stat['CLT']))
-        status.obj.add_exp(self.max_hp * status.Stat.stat['OBS'])
+        status.money_obj.set_money(status.Money.money + int(math.log(self.base_hp, 2) * status.Stat.stat['CLT']))
+        status.obj.add_exp(self.base_hp * status.Stat.stat['OBS'])
         self.moving = True
         return True
 

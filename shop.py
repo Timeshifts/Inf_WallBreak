@@ -7,16 +7,16 @@ shop_item = {
         'Price': 100,
         'Max_Buy': -1,
         'Inc_Dim': 2,
-        'Inc_Value': 2,
+        'Inc_Value': 10,
         'Func': status.obj.reset_level
         },
     2: {
         'Name': '벽에 금내기',
         'Lore': '벽의 체력이 크게 감소합니다.',
-        'Price': 1000,
-        'Max_Buy': 10,
-        'Inc_Dim': 2,
-        'Inc_Value': 3,
+        'Price': 200,
+        'Max_Buy': 19,
+        'Inc_Dim': 3,
+        'Inc_Value': (4, 1.03),
         'Func': wall.Wall.set_difficulty
         },
     3: {
@@ -44,6 +44,8 @@ class ShopItem:
         except FileNotFoundError:
             self.icon = pygame.transform.scale(pygame.image.load('images/shop_icon/base.png'), (128, 128))
         self.font_small = global_var.font_small
+        self.font_shop = global_var.font_shop
+        self.font_shop.set_bold(True)
         self.font = global_var.font
         self.font_bold = global_var.font_bold
         self.max_buy = item_data['Max_Buy']
@@ -56,17 +58,17 @@ class ShopItem:
         if Shop.shop_obj is None: return
         if self.calc_price() <= status.money_obj.money and (self.max_buy == -1 or self.buy < self.max_buy):
             status.money_obj.set_money(status.money_obj.money - self.calc_price())
-            shop_item[item_id]['Func']()
             self.buy += 1
+            shop_item[item_id]['Func']()
             Shop.shop_obj.render_self()
 
     def render_self(self):
         self.surface.fill((220, 220, 220, 220))
         self.surface.blit(self.icon, (26, 26))
         self.surface.blit(self.font_bold.render(self.name, True, 'black'), (90 - self.font_bold.size(self.name)[0] / 2, 165))
-        self.surface.blit(self.money_icon, (10, 310))
+        self.surface.blit(self.money_icon, (4, 310))
         price_text = global_var.conv_num(self.calc_price()) if (self.max_buy > self.buy or self.max_buy == -1) else 'MAX'
-        self.surface.blit(self.font_bold.render(price_text, True, 'black'), (170 - self.font_bold.size(price_text)[0], 313))
+        self.surface.blit(self.font_shop.render(price_text, True, 'black'), (173 - self.font_shop.size(price_text)[0], 315))
         global_var.blit_text(self.surface, self.lore, (10, 200), self.font_small)
         return self.surface
 
@@ -77,6 +79,8 @@ class ShopItem:
             return self.price + self.buy * self.inc_value
         elif self.inc_dim == 2:
             return int(self.price * (self.inc_value ** self.buy))
+        elif self.inc_dim == 3:
+            return int(self.price * (self.inc_value[0] ** self.buy) ** (self.inc_value[1] ** self.buy))
         else:
             raise ValueError
 
