@@ -35,7 +35,6 @@ EVENT_AUTOSAVE = pygame.event.custom_type()
 
 def main():
 
-    # 맨 위 초기 설정 부분은 0번 참고 자료를 기반으로 만들었습니다.
     pygame.init()
 
     size = width, height = 800, 600

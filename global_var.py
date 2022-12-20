@@ -22,7 +22,6 @@ def conv_num(number=0, threshold=52):
         return f'{big_number}{word[0]} {small_number}{word[1]}' if small_number >= 1 else f'{big_number}{word[0]}'
     return np.format_float_scientific(number, precision=3)
 
-# 참고 자료 7에서 가져와 단어 단위에서 글자 단위로 바꾼 함수입니다.
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):
     letters = [list(word) for word in text.splitlines()]  # 2D array where each row is a list of letters.
     max_width, max_height = surface.get_size()

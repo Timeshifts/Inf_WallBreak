@@ -57,16 +57,3 @@ Numpy 1.23.4+\
 ## 라이선스
 프로그램의 소스 코드는 모두 MIT license에 따라 배포합니다.\
 이미지는 별도 첨부된 라이선스 문서를 참고 바랍니다.
-
-## 참고 자료
-[Pygame documentation](https://www.pygame.org/docs/)\
-[0] https://www.pygame.org/docs/tut/PygameIntro.html \
-[1] https://stackoverflow.com/questions/53238491/python-pygame-mouse-position-and-which-button-is-pressed \
-[2] https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame \
-[3] https://www.delftstack.com/ko/howto/python/scientific-notation-python/ \
-[4] https://github.com/Rabbid76/PyGameExamplesAndAnswers/blob/master/documentation/pygame/pygame_time_and_timer_event.md \
-[5] https://stackoverflow.com/questions/41332861/click-and-drag-a-rectangle-with-pygame \
-[6] https://stackoverflow.com/questions/34647966/how-to-express-multiple-types-for-a-single-parameter-or-a-return-value-in-docstr \
-[7] https://stackoverflow.com/questions/42014195/rendering-text-with-multiple-lines-in-pygame \
-[8] https://codechacha.com/ko/python-convert-string-to-list/ \
-[9] https://stackoverflow.com/questions/32582733/is-there-a-python-construct-that-is-a-dummy-function
